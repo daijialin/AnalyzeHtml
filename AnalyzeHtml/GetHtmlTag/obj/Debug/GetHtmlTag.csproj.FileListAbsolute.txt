@@ -6,3 +6,11 @@ D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\obj\Debug\GetHtmlTag.exe
 D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\obj\Debug\GetHtmlTag.pdb
 D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\bin\Debug\HtmlAgilityPack.pdb
 D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\bin\Debug\HtmlAgilityPack.xml
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\bin\Debug\GetHtmlTag.exe.config
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\obj\Debug\GetHtmlTag.exe
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\obj\Debug\GetHtmlTag.pdb
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\bin\Debug\GetHtmlTag.exe
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\bin\Debug\GetHtmlTag.pdb
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\bin\Debug\HtmlAgilityPack.pdb
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\bin\Debug\HtmlAgilityPack.xml
+E:\pengbo\github\AnalyzeHtml\AnalyzeHtml\GetHtmlTag\obj\Debug\GetHtmlTag.csprojResolveAssemblyReference.cache
