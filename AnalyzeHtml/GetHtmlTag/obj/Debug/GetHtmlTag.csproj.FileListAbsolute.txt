@@ -1,0 +1,8 @@
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\bin\Debug\GetHtmlTag.exe.config
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\bin\Debug\GetHtmlTag.exe
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\bin\Debug\GetHtmlTag.pdb
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\obj\Debug\GetHtmlTag.csprojResolveAssemblyReference.cache
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\obj\Debug\GetHtmlTag.exe
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\obj\Debug\GetHtmlTag.pdb
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\bin\Debug\HtmlAgilityPack.pdb
+D:\WorkSpace\Visual\GetHtmlTag\GetHtmlTag\bin\Debug\HtmlAgilityPack.xml
