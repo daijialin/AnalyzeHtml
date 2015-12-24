@@ -22,11 +22,11 @@ namespace GetHtmlTag
         private static List<TextureData> m_TextureDataList;
         private static Dictionary<string, string> resultDiction = new Dictionary<string, string>();
 
-        static void Main(string[] args)
-        {
-            resultDiction = new Dictionary<string, string>();
-            DoHtmlDota2();
-        }
+        //static void Main(string[] args)
+        //{
+        //    resultDiction = new Dictionary<string, string>();
+        //    DoHtmlDota2();
+        //}
 
         private static void GetHtmlNode(HtmlNode mainNode)
         {
@@ -156,7 +156,7 @@ namespace GetHtmlTag
             {
                 if (i == 0)
                 {
-                    cells.Add(1, 1, "id");
+                    cells.Add(1, 1, "m_id");
                     cells.Add(1, 2, "name");
                     cells.Add(1, 3, "path");
                 }
