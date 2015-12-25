@@ -57,6 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scrips\Common\HtmlConst.cs" />
     <Compile Include="Scrips\Common\IconData.cs" />
+    <Compile Include="Scrips\Common\ParseUtility.cs" />
     <Compile Include="Scrips\MainClass.cs" />
     <Compile Include="Scrips\ParseHtml.cs" />
   </ItemGroup>

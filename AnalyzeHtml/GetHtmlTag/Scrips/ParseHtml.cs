@@ -50,9 +50,13 @@ namespace GetHtmlTag
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load(url);
-            HtmlNode nodeA = doc.GetElementbyId(kPicRoot);
+            HtmlNode htmlNode = doc.GetElementbyId(kPicRoot);
 
-            InitResultDic(nodeA);
+            InitPicPath(htmlNode);
+            InitName(htmlNode);
+
+            m_resultDic.Add(alt, srcValue);
+
             InitIconDataList();
             ExportExcel(HtmlConst.kExportExcelName, iconDataList);
             DownloadImage(iconDataList);
@@ -74,57 +78,92 @@ namespace GetHtmlTag
             }
         }
 
-        private  void InitResultDic(HtmlNode nodeA)
-        {
-            string srcValue = string.Empty;
-            string alt = string.Empty;
+        private string srcValue = string.Empty;
+        private string alt = string.Empty;
 
+
+        private  void InitPicPath(HtmlNode nodeA)
+        {
             if (nodeA.HasChildNodes)
             {
+
                 for (int i = 0; i < nodeA.ChildNodes.Count; i++)
                 {
                     HtmlNode tempNode = nodeA.ChildNodes[i];
-                    if (tempNode.Name.Equals("div"))
+                    HtmlNode childNode = GetNode(nodeA, "div", "class", "market-box-open");
+                    if (childNode != null)
                     {
-                        HtmlAttributeCollection attributeCollection = tempNode.Attributes;
-
-                        if (attributeCollection.Contains("class"))
+                        for (int j = 0; j < childNode.ChildNodes.Count; ++j)
                         {
-                            HtmlAttribute attribute = attributeCollection["class"];
-                            string classValue = attribute.Value;
-                            if (classValue == "market-box-open")
+                            
+                            HtmlNode tempChildNode = childNode.ChildNodes[j];
+                            HtmlAttribute htmlAttribute = GetAttribute(tempChildNode, "img", "src");
+                            if (htmlAttribute != null)
                             {
-                                HtmlNode imgNode = attribute.OwnerNode;
-
-                                for (int j = 0; j < imgNode.ChildNodes.Count; ++j)
-                                {
-                                    HtmlNode tempChildNode = imgNode.ChildNodes[j];
-                                    if (tempChildNode.Name.Equals("img"))
-                                    {
-                                        HtmlAttributeCollection scrCollection = tempChildNode.Attributes;
-
-                                        if (scrCollection.Contains("src"))
-                                        {
-                                            HtmlAttribute scrAttribute = scrCollection["src"];
-                                            srcValue = scrAttribute.Value;
-                                            m_resultDic.Add(alt, srcValue);
-                                            Console.WriteLine(alt + " " + srcValue);
-                                        }
-                                    }
-                                }
-
-                                
+                                srcValue = htmlAttribute.Value;
                             }
                         }
-
                     }
-                    InitResultDic(tempNode);
+
+                    InitPicPath(tempNode);               
                 }
             }
+        }
 
+        private void InitName(HtmlNode soureNode)
+        {
+            if (soureNode.HasChildNodes)
+            {
+                for (int i = 0; i < soureNode.ChildNodes.Count; i++)
+                {
+                    HtmlNode node0 = soureNode.ChildNodes[i];
 
+                    HtmlNode childNode = GetNode(node0, "h4","class", "market-article-tt");
 
+                    if (childNode != null)
+                    {
+                        alt = childNode.InnerText;
+                    }
+                    InitName(node0);
 
+                }
+            }
+        }
+
+        private HtmlAttribute GetAttribute(HtmlNode sourceNode, string head, string tail)
+        {
+            HtmlAttribute attribute = null;
+            if (sourceNode.Name.Equals(head))
+            {
+                HtmlAttributeCollection attributeCollection = sourceNode.Attributes;
+
+                if (attributeCollection.Contains(tail))
+                {
+                    attribute = attributeCollection[tail];
+                }
+            }
+            return attribute;
+        }
+
+        private HtmlNode GetNode(HtmlNode sourceNode, string head, string tail, string tailName)
+        {
+            HtmlNode newNode = null;
+            if (sourceNode.Name.Equals(head))
+            {
+                HtmlAttributeCollection attributeCollection = sourceNode.Attributes;
+
+                if (attributeCollection.Contains(tail))
+                {
+                    HtmlAttribute attribute = attributeCollection[tail];
+                    string classValue = attribute.Value;
+
+                    if (classValue == tailName)
+                    {
+                        newNode = attribute.OwnerNode;
+                    }
+                }
+            }
+            return newNode;
         }
 
         private  void DownloadImage(List<IconData> iconDataList)
@@ -163,7 +202,7 @@ namespace GetHtmlTag
                 if (i == 0)
                 {
                     cells.Add(1, 1, "id");
-                    cells.Add(1, 2, "name");
+                    cells.Add(1, 2, "tailName");
                     cells.Add(1, 3, "headIcon");
                 }
                 else if (i == 1)
