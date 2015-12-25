@@ -9,7 +9,10 @@ namespace GetHtmlTag
     public class ItemData
     {
         public int m_id;
-        public string m_iconPath;
+        public string itemName;
+        public string qualityStr;
+        public string positionStr;
         public string m_heroName;
+        public string m_iconPath;
     }
 }
