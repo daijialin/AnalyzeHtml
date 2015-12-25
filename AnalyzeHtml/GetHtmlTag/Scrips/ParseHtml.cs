@@ -61,34 +61,26 @@ namespace GetHtmlTag
 
             InitPicPath(htmlNode);
             InitName(htmlNode);
-
+            
             if (!m_resultDic.ContainsKey(m_alt))
             {
                 m_resultDic.Add(m_alt, m_srcValue);
-                InitIconDataList(idStr, nameStr,  qualityStr,  positionStr,  heroNameStr);
+                InitIconDataList(idStr, nameStr, qualityStr, positionStr, heroNameStr, m_srcValue);
             }
         }
 
-        private  void InitIconDataList(string idStr, string nameStr, string qualityStr, string positionStr, string heroNameStr)
-        {  
-            int index = 0;
-            foreach (KeyValuePair<string, string> item in m_resultDic)
-            {
-                ItemData itemData = new ItemData();
-                //itemData.m_id = index;
-                //itemData.m_heroName = item.Key;
-                //itemData.m_iconPath = item.Value;
+        private  void InitIconDataList(string idStr, string nameStr, string qualityStr, string positionStr, string heroNameStr, string picUrl)
+        {
+            ItemData itemData = new ItemData();
+            itemData.m_id = 100000 + int.Parse(idStr);
+            itemData.itemName = nameStr;
+            itemData.qualityStr = qualityStr;
+            itemData.positionStr = positionStr;
+            itemData.m_heroName = heroNameStr;
+            itemData.m_iconPath = picUrl;
 
-                itemData.m_id = 100000 + int.Parse(idStr);
-                itemData.itemName = nameStr;
-                itemData.qualityStr = qualityStr;
-                itemData.positionStr = positionStr;
-                itemData.m_heroName = heroNameStr;
-                itemData.m_iconPath = item.Value;
-
-                index++;
-                m_itemDataList.Add(itemData);
-            }
+            //index++;
+            m_itemDataList.Add(itemData);
         }
         private  void InitPicPath(HtmlNode nodeA)
         {
@@ -143,6 +135,7 @@ namespace GetHtmlTag
             for (int i = 0; i < count; i++)
             {
                 SaveImage(iconDataList[i].m_iconPath, iconDataList[i].m_id);
+                Console.WriteLine("downLoadPic:" + "" + iconDataList[i].itemName);
             }
         }
 
@@ -205,6 +198,7 @@ namespace GetHtmlTag
                     cells.Add(currentRow, 5, iconDataList[i - 2].m_heroName);
                     cells.Add(currentRow, 6, iconDataList[i - 2].m_iconPath);
                 }
+                Console.WriteLine("export Excel:" + "" + i);
 
             }
             xls.Save();
