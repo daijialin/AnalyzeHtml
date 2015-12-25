@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GetHtmlTag
 {
-    public class IconData
+    public class ItemData
     {
         public int m_id;
         public string m_iconPath;

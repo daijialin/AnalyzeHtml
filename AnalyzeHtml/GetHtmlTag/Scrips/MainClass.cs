@@ -19,7 +19,7 @@ namespace GetHtmlTag
     class MainClass
     {
         private static Dictionary<string, string> m_resultDic = new Dictionary<string, string>();
-        private static List<IconData> iconDataList = new List<IconData>();
+        private static List<ItemData> iconDataList = new List<ItemData>();
 
 
         static void Main(string[] args)
@@ -47,7 +47,7 @@ namespace GetHtmlTag
             int index = 0;
             foreach (KeyValuePair<string, string> item in m_resultDic)
             {
-                IconData td = new IconData();
+                ItemData td = new ItemData();
                 td.m_id = index;
                 td.m_heroName = item.Key;
                 td.m_iconPath = item.Value;
@@ -86,7 +86,7 @@ namespace GetHtmlTag
             }
         }
 
-        private static void DownloadImage(List<IconData> iconDataList)
+        private static void DownloadImage(List<ItemData> iconDataList)
         {
             int count = iconDataList.Count;
             for (int i = 0; i < count; i++)
@@ -103,7 +103,7 @@ namespace GetHtmlTag
             mywebclient.DownloadFile(url, filepath);
         }
 
-        private static void ExportExcel(string excelName, List<IconData> iconDataList)
+        private static void ExportExcel(string excelName, List<ItemData> iconDataList)
         {
             XlsDocument xls = new XlsDocument();
             xls.FileName = excelName;
