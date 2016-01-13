@@ -15,8 +15,8 @@ namespace GetHtmlTag
         private Dictionary<string, string> m_resultDic = new Dictionary<string, string>();
         private List<ItemData> m_itemDataList = new List<ItemData>();
         private string path = @"E:\\pengbo\\github\\AnalyzeHtml\\AnalyzeHtml\\GetHtmlTag\\bin\\Debug\\OrnamentsConfig.xls";
-        private string m_srcValue = string.Empty;
-        private string m_alt = string.Empty;
+        private string m_picPath = string.Empty;
+        private string m_picName = string.Empty;
         public const string kSaveImagePath = @"D:\DotaResource\AccessoryIcons\";
         private const string kPicRoot = "bodyer";
 
@@ -45,28 +45,29 @@ namespace GetHtmlTag
                 }
                 string urlPath = soureUrlPath + "?lang=zh_cn";
 
-                ParseExcel(idStr, nameStr, qualityStr, positionStr, heroNameStr, urlPath);
-                Console.WriteLine(i + "     " + m_alt);
+                InitPicAndNameFromWeb(urlPath);
+
+                if (!m_resultDic.ContainsKey(m_picName))
+                {
+                    m_resultDic.Add(m_picName, m_picPath);
+                    InitIconDataList(idStr, nameStr, qualityStr, positionStr, heroNameStr, m_picPath);
+                }
+                Console.WriteLine("ParseWeb:  " + i + "" + m_picName);
             }
-            ExportExcel("accessoryExcel", m_itemDataList);
+
+            ExportExcel(m_itemDataList, "AccessoryExcel");
             DownloadImage(m_itemDataList);
             Console.ReadLine();
         }
 
-        private  void ParseExcel(string idStr, string nameStr, string qualityStr, string positionStr, string heroNameStr, string url)
+        private  void InitPicAndNameFromWeb(string url)
         {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load(url);
             HtmlNode htmlNode = doc.GetElementbyId(kPicRoot);
 
-            InitPicPath(htmlNode);
-            InitName(htmlNode);
-            
-            if (!m_resultDic.ContainsKey(m_alt))
-            {
-                m_resultDic.Add(m_alt, m_srcValue);
-                InitIconDataList(idStr, nameStr, qualityStr, positionStr, heroNameStr, m_srcValue);
-            }
+            InitPicPathFromWeb(htmlNode);
+            InitNameFromWeb(htmlNode);
         }
 
         private  void InitIconDataList(string idStr, string nameStr, string qualityStr, string positionStr, string heroNameStr, string picUrl)
@@ -82,7 +83,7 @@ namespace GetHtmlTag
             //index++;
             m_itemDataList.Add(itemData);
         }
-        private  void InitPicPath(HtmlNode nodeA)
+        private  void InitPicPathFromWeb(HtmlNode nodeA)
         {
             if (nodeA.HasChildNodes)
             {
@@ -99,17 +100,17 @@ namespace GetHtmlTag
                             HtmlAttribute htmlAttribute = ParseUtility.GetAttribute(tempChildNode, "img", "src");
                             if (htmlAttribute != null)
                             {
-                                m_srcValue = htmlAttribute.Value;
+                                m_picPath = htmlAttribute.Value;
                             }
                         }
                     }
 
-                    InitPicPath(tempNode);               
+                    InitPicPathFromWeb(tempNode);               
                 }
             }
         }
 
-        private void InitName(HtmlNode soureNode)
+        private void InitNameFromWeb(HtmlNode soureNode)
         {
             if (soureNode.HasChildNodes)
             {
@@ -121,9 +122,9 @@ namespace GetHtmlTag
 
                     if (childNode != null)
                     {
-                        m_alt = childNode.InnerText;
+                        m_picName = childNode.InnerText;
                     }
-                    InitName(node0);
+                    InitNameFromWeb(node0);
 
                 }
             }
@@ -147,14 +148,13 @@ namespace GetHtmlTag
             mywebclient.DownloadFile(url, filepath);
         }
 
-        private  void ExportExcel(string excelName, List<ItemData> iconDataList)
+        private void ExportExcel(List<ItemData> iconDataList, string excelName = "newExcel", string author = "admin", string subject = "admin", string sheetName = "Sheet0")
         {
             XlsDocument xls = new XlsDocument();
             xls.FileName = excelName;
-            xls.SummaryInformation.Author = "daijialin";
-            xls.SummaryInformation.Subject = "dotaHeroTexture";
+            xls.SummaryInformation.Author = author;
+            xls.SummaryInformation.Subject = subject;
 
-            string sheetName = "Sheet0";
             org.in2bits.MyXls.Worksheet sheet = xls.Workbook.Worksheets.Add(sheetName);
             Cells cells = sheet.Cells;
 
@@ -165,16 +165,12 @@ namespace GetHtmlTag
             {
                 if (i == 0)
                 {
-                    //cells.Add(1, 1, "id");
-                    //cells.Add(1, 2, "itemName");
-                    //cells.Add(1, 3, "itemPath");
                     cells.Add(1, 1, "id");
                     cells.Add(1, 2, "itemName");
                     cells.Add(1, 3, "qualityStr");
                     cells.Add(1, 4, "positionStr");
                     cells.Add(1, 5, "heroName");
                     cells.Add(1, 6, "itemPath");
-
                 }
                 else if (i == 1)
                 {
@@ -188,9 +184,6 @@ namespace GetHtmlTag
                 else
                 {
                     int currentRow = rowMin + i;
-                    //cells.Add(currentRow, 1, iconDataList[i - 2].m_id);
-                    //cells.Add(currentRow, 2, iconDataList[i - 2].m_heroName);
-                    //cells.Add(currentRow, 3, iconDataList[i - 2].m_iconPath);
                     cells.Add(currentRow, 1, iconDataList[i - 2].m_id);
                     cells.Add(currentRow, 2, iconDataList[i - 2].itemName);
                     cells.Add(currentRow, 3, iconDataList[i - 2].qualityStr);

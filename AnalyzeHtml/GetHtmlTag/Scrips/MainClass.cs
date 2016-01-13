@@ -15,18 +15,15 @@ using Microsoft.Office.Interop.Excel;
 
 namespace GetHtmlTag
 {
-
     class MainClass
     {
         private static Dictionary<string, string> m_resultDic = new Dictionary<string, string>();
         private static List<ItemData> iconDataList = new List<ItemData>();
 
-
         static void Main(string[] args)
         {
             ParseHtml parseHtml = new ParseHtml();
             parseHtml.ReadXml();
-            //DoHtml();
         }
     }
 }
