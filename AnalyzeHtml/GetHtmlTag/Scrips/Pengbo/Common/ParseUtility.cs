@@ -1,14 +1,30 @@
 ﻿using System;
-using System.Runtime.Remoting.Messaging;
 using HtmlAgilityPack;
 using Microsoft.Office.Interop.Excel;
+using org.in2bits.MyXls;
 
-namespace GetHtmlTag
+namespace Pengbo
 {
 
 
     public static class ParseUtility
     {
+        public static XlsDocument GetInitXlsDoc(string excelName = "newExcel", string author = "admin", string subject = "admin", string sheetName = "Sheet0")
+        {
+            XlsDocument xls = new XlsDocument();
+            xls.FileName = excelName;
+            xls.SummaryInformation.Author = author;
+            xls.SummaryInformation.Subject = subject;
+
+            xls.Workbook.Worksheets.Add(sheetName);
+            return xls;
+        }
+
+        /// <summary>
+        /// Get Excel Range By Excel Path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static Range GetExcelRang(string path)
         {
             Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
