@@ -151,7 +151,7 @@ namespace Pengbo
             webClient.DownloadFile(url, filepath);
         }
 
-        public static void InitCells(Cells cells, int rowNum, int rowMin, int line, object[] titles, object[] describes, object[] values)
+        public static void InitCells(Cells cells, int rowNum, int rowMin, int line, object[] titles, object[] describes, List<ItemData> itemDataList)
         {
             for (int i = 0; i < rowNum + 2; i++)
             {
@@ -172,10 +172,12 @@ namespace Pengbo
                 else
                 {
                     int currentRow = rowMin + i;
-                    for (int j = 0; j < line; ++j)
-                    {
-                        cells.Add(currentRow, j + 1, values[j]);
-                    }
+                    cells.Add(currentRow, 1, itemDataList[i - 2].m_id);
+                    cells.Add(currentRow, 2, itemDataList[i - 2].itemName);
+                    cells.Add(currentRow, 3, itemDataList[i - 2].qualityStr);
+                    cells.Add(currentRow, 4, itemDataList[i - 2].positionStr);
+                    cells.Add(currentRow, 5, itemDataList[i - 2].m_heroName);
+                    cells.Add(currentRow, 6, itemDataList[i - 2].m_iconPath);
                 }
                 Console.WriteLine("export Excel:" + "" + i);
             }
@@ -191,58 +193,20 @@ namespace Pengbo
             int rowNum = m_itemDataList.Count;
             int rowMin = 1;
             int lineNum = 6;
-            //object[] titles = new object[6]
-            //{
-            //    "id", "itemName",  "qualityStr", "positionStr", "heroName", "itemPath",
-            //};
 
-            //object[] describes = new object[6]
-            //{
-            //    "", "饰品名称",  "饰品品质", "饰品位置", "饰品所属", "饰品路径",
-            //};
-
-            //object[] values = new object[6]
-            //{
-            //    m_itemDataList[i - 2].m_id, m_itemDataList[i - 2].itemName,  "qualityStr", "positionStr", "heroName", "itemPath",
-            //};
-
-
-            //InitCells(cells, rowNum, rowMin, 6, null, null, null);
-            for (int i = 0; i < rowNum + 2; i++)
+            object[] titles = new object[6]
             {
-                if (i == 0)
-                {
-                    cells.Add(1, 1, "id");
-                    cells.Add(1, 2, "itemName");
-                    cells.Add(1, 3, "qualityStr");
-                    cells.Add(1, 4, "positionStr");
-                    cells.Add(1, 5, "heroName");
-                    cells.Add(1, 6, "itemPath");
-                }
-                else if (i == 1)
-                {
-                    cells.Add(2, 1, "");
-                    cells.Add(2, 2, "饰品名称");
-                    cells.Add(2, 3, "饰品品质");
-                    cells.Add(2, 4, "饰品位置");
-                    cells.Add(2, 5, "饰品所属");
-                    cells.Add(2, 6, "饰品URL路径");
-                }
-                else
-                {
-                    int currentRow = rowMin + i;
-                    cells.Add(currentRow, 1, m_itemDataList[i - 2].m_id);
-                    cells.Add(currentRow, 2, m_itemDataList[i - 2].itemName);
-                    cells.Add(currentRow, 3, m_itemDataList[i - 2].qualityStr);
-                    cells.Add(currentRow, 4, m_itemDataList[i - 2].positionStr);
-                    cells.Add(currentRow, 5, m_itemDataList[i - 2].m_heroName);
-                    cells.Add(currentRow, 6, m_itemDataList[i - 2].m_iconPath);
-                }
-                Console.WriteLine("export Excel:" + "" + i);
+                "id", "itemName",  "qualityStr", "positionStr", "heroName", "itemPath",
+            };
 
-            }
+            object[] describes = new object[6]
+            {
+                "", "饰品名称",  "饰品品质", "饰品位置", "饰品所属", "饰品路径",
+            };
 
-            //xls.Save();
+
+            InitCells(cells, rowNum, rowMin, 6, titles, describes, m_itemDataList);
+
             xls.Save(HtmlConst.kTargetExcelPath, true);
         }
     }
